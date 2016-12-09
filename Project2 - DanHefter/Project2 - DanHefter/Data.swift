@@ -16,6 +16,8 @@ class Article {
    var description: String
    var imageLink : String
    
+   var image: UIImage?
+   
    
    init(title: String, description: String, imageLink : String) {
       self.title = title

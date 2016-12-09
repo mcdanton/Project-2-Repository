@@ -14,6 +14,12 @@ class TableViewCell: UITableViewCell {
    @IBOutlet weak var cellImage: UIImageView!
    @IBOutlet weak var cellLabel: UILabel!
    
+   var article: Article! {
+      didSet {
+         updateUI()
+      }
+   }
+   
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,5 +31,38 @@ class TableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+   
+   
+   func updateUI() {
+      
+      cellLabel.text = article.title
+      
+      // TODO check article.image before fetch
+      convertImageLinkToData(imageLink: article.imageLink)
+   }
+   
+   
+   func convertImageLinkToData(imageLink: String) {
+      
+      let urlRequest = URLRequest(url: URL(string: imageLink)!)
+      let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+      let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+         
+         
+         guard let responseData = data else {
+            print("Error \(error.debugDescription): did not receive data")
+            return
+         }
 
+         
+         DispatchQueue.main.async {
+            
+            let image = UIImage(data: responseData)
+            article.image = image
+            self.cellImage.image = image
+            
+         }
+      }
+      task.resume()
+   }
 }

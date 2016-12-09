@@ -110,8 +110,7 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
       
-      cell.cellLabel.text = Article.articles[indexPath.row].title
-      cell.cellImage.image = UIImage(data: Article.dataOfImageLink[indexPath.row])
+      cell.article = Article.articles[indexPath.row]
       
       return cell
    }
