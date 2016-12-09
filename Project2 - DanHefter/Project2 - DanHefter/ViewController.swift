@@ -14,7 +14,7 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    
    
-
+   
    override func viewDidLoad() {
       super.viewDidLoad()
       // Do any additional setup after loading the view, typically from a nib.
@@ -23,29 +23,28 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
          do {
             let parsedJSON = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:Any]
             
-            let articles = parsedJSON["articles"] as! [[String:Any]]
+            let jSONarticles = parsedJSON["articles"] as! [[String:Any]]
+            print(jSONarticles)
             
-            for item in articles {
-                News.articleDescription = item["description"] as! (String)
+            for item in jSONarticles {
+               
+               let title = item["title"] as? (String) ?? "No article title"
+               let description = item["description"] as? (String) ?? "No article description"
+               let imageLink = item["urlToImage"] as? (String) ?? "No article image"
+               let article = Article(title: title, description: description, imageLink : imageLink)
+               Article.articles.append(article)
             }
-            
-            for imageLink in articles {
-               News.imageLink = imageLink["urlToImage"] as! (String)
-            }
-
-            News.init(articles: articles, articleDescription: News.articleDescription, imageLink: News.imageLink)
-            
          }
          catch {
             print(error.localizedDescription)
          }
-   }
+      }
       
       
       
       //end of ViewDidLoad
    }
-
+   
    override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
       // Dispose of any resources that can be recreated.
@@ -65,62 +64,55 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
          }
          DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
             closure(responseData)
-            self.convertImageLinkToData(urlLink: { link in
-               News.dataOfImageLink = link
-               self.myTableView.reloadData()
+            
+            self.convertImageLinkToData(imageURL: { link in
+               for data in link {
+                  Article.dataOfImageLink.append(data)
+               }
             })
-         }
-                  }
-      task.resume()
-   }
-
-   
-      func convertImageLinkToData(urlLink: @escaping (Data) -> ()) {
-      let urlRequest = URLRequest(url: URL(string: News.imageLink)!)
-      let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-      let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
-         
-         guard let responseData = data else {
-            print("Error \(error.debugDescription): did not receive data")
-            return
-         }
-         DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-            urlLink(responseData)
          }
       }
       task.resume()
-      
-      
-      
-      
    }
    
    
    
-   
+   func convertImageLinkToData(imageURL: @escaping ([Data]) -> ()) {
+      for image in Article.articles {
+         let urlRequest = URLRequest(url: URL(string: image.imageLink)!)
+         let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+         let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+            
+            
+            guard let responseData = data else {
+               print("Error \(error.debugDescription): did not receive data")
+               return
+            }
+            var dataArray = [Data]()
+            dataArray.append(responseData)
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+               imageURL(dataArray)
+            }
+         }
+         task.resume()
+      }
+      self.myTableView.reloadData()
+   }
    
    
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 1
+      return Article.articles.count
    }
-
    
    
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
       
-         cell.cellImage.image = UIImage(data: News.dataOfImageLink)
-  
+      cell.cellLabel.text = Article.articles[indexPath.row].title
+      cell.cellImage.image = UIImage(data: Article.dataOfImageLink[indexPath.row])
       
       return cell
    }
-
-   
-   
-   
-   
-   
-      }
-
+}

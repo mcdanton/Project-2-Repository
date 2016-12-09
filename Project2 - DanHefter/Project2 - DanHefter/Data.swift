@@ -8,26 +8,26 @@
 
 import Foundation
 
-class News {
+class Article {
    
-   var articles: [[String:Any]]
-   var articleDescription: String
+   static var articles = [Article]()
+   
+   var title: String
+   var description: String
    var imageLink : String
    
    
-   init(articles: [[String:Any]], articleDescription: String, imageLink : String) {
-   self.articles = articles
-   self.articleDescription = articleDescription
-   self.imageLink = imageLink
-      
-   
+   init(title: String, description: String, imageLink : String) {
+      self.title = title
+      self.description = description
+      self.imageLink = imageLink
+//      Article.articles.append(self)
    }
    
-   static var articleDescription: String = ""
-   static var imageLink: String = ""
-   static var dataOfImageLink = Data()
+   static var dataOfImageLink = [Data]()
    
 }
+
 
 
 
