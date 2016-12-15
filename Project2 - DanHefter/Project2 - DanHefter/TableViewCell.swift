@@ -48,21 +48,23 @@ class TableViewCell: UITableViewCell {
       let urlSession = URLSession(configuration: URLSessionConfiguration.default)
       let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
          
-         
          guard let responseData = data else {
             print("Error \(error.debugDescription): did not receive data")
             return
          }
-
-         
          DispatchQueue.main.async {
-            
+            print(UIImage(data: responseData))
             let image = UIImage(data: responseData)
-            article.image = image
+            self.article.image = image
             self.cellImage.image = image
-            
          }
       }
       task.resume()
    }
+   
+   
+   
+   
+   
+   
 }
