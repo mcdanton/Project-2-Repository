@@ -18,7 +18,6 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    override func viewDidLoad() {
       super.viewDidLoad()
-      // Do any additional setup after loading the view, typically from a nib.
       
       fetchData() { data in
          do {
@@ -32,7 +31,8 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
                let title = item["title"] as? (String) ?? "No article title"
                let description = item["description"] as? (String) ?? "No article description"
                let imageLink = item["urlToImage"] as? (String) ?? "No article image"
-               let article = Article(title: title, description: description, imageLink : imageLink)
+               let url = item["url"] as? (String) ?? "No article URL"
+               let article = Article(title: title, description: description, imageLink: imageLink, url: url)
                Article.articles.append(article)
             }
          }
@@ -97,7 +97,9 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
          }
          task.resume()
       }
-      self.myTableView.reloadData()
+      DispatchQueue.main.async {
+         self.myTableView.reloadData()
+      }
    }
    
    
@@ -121,17 +123,17 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
       
       let selectedArticle = Article.articles[indexPath.row]
       
-      let svc = SFSafariViewController(url: URL(string: "https://www.wsj.com/articles/bond-rout-deepens-after-fed-rate-signals-1481794245")!)
+      let svc = SFSafariViewController(url: URL(string: selectedArticle.url)!)
       
       self.navigationController?.pushViewController(svc, animated: true)
       
    }
    
    
-  // consolidating functions WIP:
    
    
    
+   // consolidating functions WIP:
    
    func fetchData2(closure: @escaping (Data) -> ()) {
       
@@ -163,7 +165,8 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let title = item["title"] as? (String) ?? "No article title"
             let description = item["description"] as? (String) ?? "No article description"
             let imageLink = item["urlToImage"] as? (String) ?? "No article image"
-            let article = Article(title: title, description: description, imageLink : imageLink)
+            let url = item["url"] as? (String) ?? "No article URL"
+            let article = Article(title: title, description: description, imageLink: imageLink, url: url)
             Article.articles.append(article)
          }
       }
@@ -171,14 +174,14 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
          print(error.localizedDescription)
       }
    }
-
-
    
-
-
-
-
-
+   
+   
+   
+   
+   
+   
+   
    //DON'T THINK I'M USING THIS FUNCITON ANYMORE. INSTEAD USING THE ONE IN MY CELL FILE
    func convertImageLinkToData2(imageURL: @escaping ([Data]) -> ()) {
       
@@ -202,7 +205,7 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
       }
       self.myTableView.reloadData()
    }
-
+   
    
    
    

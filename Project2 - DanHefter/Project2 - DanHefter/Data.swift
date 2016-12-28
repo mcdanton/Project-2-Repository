@@ -16,14 +16,15 @@ class Article {
    var title: String
    var description: String
    var imageLink : String
-   
+   var url: String
    var image: UIImage?
    
    
-   init(title: String, description: String, imageLink : String) {
+   init(title: String, description: String, imageLink: String, url: String) {
       self.title = title
       self.description = description
       self.imageLink = imageLink
+      self.url = url
 //      Article.articles.append(self)
    }
    

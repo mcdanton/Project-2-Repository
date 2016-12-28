@@ -14,7 +14,6 @@
 		37E076731DEF449C00BBE150 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37E076711DEF449C00BBE150 /* Main.storyboard */; };
 		37E076751DEF449C00BBE150 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37E076741DEF449C00BBE150 /* Assets.xcassets */; };
 		37E076781DEF449C00BBE150 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37E076761DEF449C00BBE150 /* LaunchScreen.storyboard */; };
-		37E87D1C1E01F1570014EDE4 /* SafariViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E87D1B1E01F1570014EDE4 /* SafariViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		37E076741DEF449C00BBE150 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37E076771DEF449C00BBE150 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37E076791DEF449C00BBE150 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		37E87D1B1E01F1570014EDE4 /* SafariViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafariViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +66,6 @@
 				37E076741DEF449C00BBE150 /* Assets.xcassets */,
 				37E076761DEF449C00BBE150 /* LaunchScreen.storyboard */,
 				37E076791DEF449C00BBE150 /* Info.plist */,
-				37E87D1B1E01F1570014EDE4 /* SafariViewController.swift */,
 			);
 			path = "Project2 - DanHefter";
 			sourceTree = "<group>";
@@ -148,7 +145,6 @@
 			files = (
 				372A63201DF0C0D7001DB108 /* TableViewCell.swift in Sources */,
 				37E076701DEF449C00BBE150 /* ViewController.swift in Sources */,
-				37E87D1C1E01F1570014EDE4 /* SafariViewController.swift in Sources */,
 				37E0766E1DEF449C00BBE150 /* AppDelegate.swift in Sources */,
 				372A63221DF0C862001DB108 /* Data.swift in Sources */,
 			);
