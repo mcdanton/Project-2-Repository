@@ -80,22 +80,39 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    func convertImageLinkToData(imageURL: @escaping ([Data]) -> ()) {
       for image in Article.articles {
-         let urlRequest = URLRequest(url: URL(string: image.imageLink)!)
-         let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-         let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
-            
-            
-            guard let responseData = data else {
-               print("Error \(error.debugDescription): did not receive data")
-               return
+         if image.imageLink == "" {
+            let urlRequest = URLRequest(url: URL(string: "http://subtitling.com/scrn-content/plugins/ajax-search-pro/img/default.jpg")!)
+            let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+            let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+               
+               guard let responseData = data else {
+                  print("Error \(error.debugDescription): did not receive data")
+                  return
+               }
+               var dataArray = [Data]()
+               dataArray.append(responseData)
+               DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                  imageURL(dataArray)
+               }
             }
-            var dataArray = [Data]()
-            dataArray.append(responseData)
-            DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-               imageURL(dataArray)
+            task.resume()
+         } else {
+            let urlRequest = URLRequest(url: URL(string: image.imageLink)!)
+            let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+            let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
+         
+               guard let responseData = data else {
+                  print("Error \(error.debugDescription): did not receive data")
+                  return
+               }
+               var dataArray = [Data]()
+               dataArray.append(responseData)
+               DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
+                  imageURL(dataArray)
+               }
             }
+            task.resume()
          }
-         task.resume()
       }
       DispatchQueue.main.async {
          self.myTableView.reloadData()
