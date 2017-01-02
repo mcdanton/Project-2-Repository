@@ -13,8 +13,24 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    @IBOutlet weak var myTableView: UITableView!
    @IBOutlet weak var searchBar: UISearchBar!
+   @IBOutlet weak var categories: UIBarButtonItem!
+   @IBOutlet weak var sidebarView: UIView!
+   @IBOutlet weak var sidebarLeadingConstraint: NSLayoutConstraint!
+   
    
    var filteredArticles = [Article]()
+   var sidebarShowing = false
+   
+   
+   @IBAction func categoriesPressed(_ sender: Any) {
+      if sidebarShowing {
+      sidebarLeadingConstraint.constant = -150
+      } else {
+         sidebarLeadingConstraint.constant = 0
+         UIView.animate(withDuration: 0.3, animations: { self.view.layoutIfNeeded()})
+      }
+      sidebarShowing = !sidebarShowing
+   }
    
    
    func searchBarSetup() {
@@ -38,6 +54,8 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    override func viewDidLoad() {
       super.viewDidLoad()
       searchBar.delegate = self
+      sidebarView.layer.shadowOpacity = 1
+      sidebarView.layer.shadowRadius = 5
       
       fetchData(closure: { data in
          self.parseJSON(jsonData: data)})
