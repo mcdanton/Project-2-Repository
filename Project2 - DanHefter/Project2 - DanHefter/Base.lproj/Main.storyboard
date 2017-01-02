@@ -85,6 +85,11 @@
                                     <outlet property="delegate" destination="vqp-9F-QkD" id="EWj-AA-5ug"/>
                                 </connections>
                             </tableView>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="avq-J4-PSf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -97,6 +102,7 @@
                     <navigationItem key="navigationItem" id="Wp8-tR-RWp"/>
                     <connections>
                         <outlet property="myTableView" destination="NLe-oF-0br" id="Oyp-Mq-hFV"/>
+                        <outlet property="searchBar" destination="avq-J4-PSf" id="yvH-eD-BfX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHu-A5-1bX" userLabel="First Responder" sceneMemberID="firstResponder"/>

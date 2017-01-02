@@ -9,23 +9,51 @@
 import UIKit
 import SafariServices
 
-class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
    
    @IBOutlet weak var myTableView: UITableView!
+   @IBOutlet weak var searchBar: UISearchBar!
+   
+   var filteredArticles = [Article]()
+   
+   
+   func searchBarSetup() {
+      searchBar.showsScopeBar = false
+      self.myTableView.tableHeaderView = searchBar
+   }
+   
+   //MARK: Search Bar Delegate
+   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+      filteredArticles = Article.articles.filter({ (mod) -> Bool in
+         return mod.title.lowercased().contains(searchText.lowercased())
+      })
+      self.myTableView.reloadData()
+   }
+   
+   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+      self.searchBar.endEditing(true)
+   }
+   
    
    override func viewDidLoad() {
       super.viewDidLoad()
+      searchBar.delegate = self
       
       fetchData(closure: { data in
          self.parseJSON(jsonData: data)})
-    }
+      
+      let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+      view.addGestureRecognizer(tap)
+        }
    
    override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
       // Dispose of any resources that can be recreated.
    }
    
-
+   func dismissKeyboard() {
+      view.endEditing(true)
+   }
    
    func fetchData(closure: @escaping (Data) -> ()) {
       
@@ -73,15 +101,24 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return Article.articles.count
+      if filteredArticles.count > 0 {
+         return filteredArticles.count
+      } else {
+         return Article.articles.count
+      }
    }
    
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
       let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
-      cell.article = Article.articles[indexPath.row]
-      return cell
+      if filteredArticles.count > 0 {
+         cell.article = filteredArticles[indexPath.row]
+         return cell
+      } else {
+         cell.article = Article.articles[indexPath.row]
+         return cell
+      }
    }
    
    
@@ -95,7 +132,11 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
 }
 
+//extension RootViewController: UISearchResultsUpdating {
+//   func updateSearchResults(for searchController: UISearchController) {
+//      filterArticles(searchText: searchController.searchBar.text)
+//   }
+//}
 
 
 
-  
