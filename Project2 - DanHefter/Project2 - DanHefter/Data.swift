@@ -7,27 +7,31 @@
 //
 
 import Foundation
+import UIKit
 
-class News {
+class Article {
    
-   var articles: [[String:Any]]
-   var articleDescription: String
+   static var articles = [Article]()
+   
+   var title: String
+   var description: String
    var imageLink : String
+   var url: String
+   var image: UIImage?
    
    
-   init(articles: [[String:Any]], articleDescription: String, imageLink : String) {
-   self.articles = articles
-   self.articleDescription = articleDescription
-   self.imageLink = imageLink
-      
-   
+   init(title: String, description: String, imageLink: String, url: String) {
+      self.title = title
+      self.description = description
+      self.imageLink = imageLink
+      self.url = url
+//      Article.articles.append(self)
    }
    
-   static var articleDescription: String = ""
-   static var imageLink: String = ""
-   static var dataOfImageLink = Data()
+   static var dataOfImageLink = [Data]()
    
 }
+
 
 
 

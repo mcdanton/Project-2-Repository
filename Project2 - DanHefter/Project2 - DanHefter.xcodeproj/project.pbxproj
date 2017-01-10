@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		372A63201DF0C0D7001DB108 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372A631F1DF0C0D7001DB108 /* TableViewCell.swift */; };
 		372A63221DF0C862001DB108 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372A63211DF0C862001DB108 /* Data.swift */; };
+		37CC82621E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 37CC82611E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg */; };
 		37E0766E1DEF449C00BBE150 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0766D1DEF449C00BBE150 /* AppDelegate.swift */; };
 		37E076701DEF449C00BBE150 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E0766F1DEF449C00BBE150 /* ViewController.swift */; };
 		37E076731DEF449C00BBE150 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37E076711DEF449C00BBE150 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		372A631F1DF0C0D7001DB108 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		372A63211DF0C862001DB108 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		37CC82611E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg"; sourceTree = "<group>"; };
 		37E0766A1DEF449C00BBE150 /* Project2 - DanHefter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project2 - DanHefter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37E0766D1DEF449C00BBE150 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37E0766F1DEF449C00BBE150 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				372A63211DF0C862001DB108 /* Data.swift */,
 				37E076711DEF449C00BBE150 /* Main.storyboard */,
 				37E076741DEF449C00BBE150 /* Assets.xcassets */,
+				37CC82611E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg */,
 				37E076761DEF449C00BBE150 /* LaunchScreen.storyboard */,
 				37E076791DEF449C00BBE150 /* Info.plist */,
 			);
@@ -130,6 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37CC82621E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg in Resources */,
 				37E076781DEF449C00BBE150 /* LaunchScreen.storyboard in Resources */,
 				37E076751DEF449C00BBE150 /* Assets.xcassets in Resources */,
 				37E076731DEF449C00BBE150 /* Main.storyboard in Resources */,

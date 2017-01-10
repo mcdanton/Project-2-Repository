@@ -7,51 +7,71 @@
 //
 
 import UIKit
+import SafariServices
 
-class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
    
    @IBOutlet weak var myTableView: UITableView!
+   @IBOutlet weak var searchBar: UISearchBar!
+   @IBOutlet weak var categories: UIBarButtonItem!
+   @IBOutlet weak var sidebarView: UIView!
+   @IBOutlet weak var sidebarLeadingConstraint: NSLayoutConstraint!
    
    
+   var filteredArticles = [Article]()
+   var sidebarShowing = false
    
-
+   
+   @IBAction func categoriesPressed(_ sender: Any) {
+      if sidebarShowing {
+      sidebarLeadingConstraint.constant = -150
+      } else {
+         sidebarLeadingConstraint.constant = 0
+         UIView.animate(withDuration: 0.3, animations: { self.view.layoutIfNeeded()})
+      }
+      sidebarShowing = !sidebarShowing
+   }
+   
+   
+   func searchBarSetup() {
+      searchBar.showsScopeBar = false
+      self.myTableView.tableHeaderView = searchBar
+   }
+   
+   //MARK: Search Bar Delegate
+   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+      filteredArticles = Article.articles.filter({ (mod) -> Bool in
+         return mod.title.lowercased().contains(searchText.lowercased())
+      })
+      self.myTableView.reloadData()
+   }
+   
+   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+      self.searchBar.endEditing(true)
+   }
+   
+   
    override func viewDidLoad() {
       super.viewDidLoad()
-      // Do any additional setup after loading the view, typically from a nib.
+      searchBar.delegate = self
+      sidebarView.layer.shadowOpacity = 1
+      sidebarView.layer.shadowRadius = 5
       
-      fetchData() { data in
-         do {
-            let parsedJSON = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:Any]
-            
-            let articles = parsedJSON["articles"] as! [[String:Any]]
-            
-            for item in articles {
-                News.articleDescription = item["description"] as! (String)
-            }
-            
-            for imageLink in articles {
-               News.imageLink = imageLink["urlToImage"] as! (String)
-            }
-
-            News.init(articles: articles, articleDescription: News.articleDescription, imageLink: News.imageLink)
-            
-         }
-         catch {
-            print(error.localizedDescription)
-         }
-   }
+      fetchData(closure: { data in
+         self.parseJSON(jsonData: data)})
       
-      
-      
-      //end of ViewDidLoad
-   }
-
+      let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+      view.addGestureRecognizer(tap)
+        }
+   
    override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
       // Dispose of any resources that can be recreated.
    }
    
-   
+   func dismissKeyboard() {
+      view.endEditing(true)
+   }
    
    func fetchData(closure: @escaping (Data) -> ()) {
       
@@ -65,62 +85,76 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
          }
          DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
             closure(responseData)
-            self.convertImageLinkToData(urlLink: { link in
-               News.dataOfImageLink = link
-               self.myTableView.reloadData()
-            })
-         }
-                  }
-      task.resume()
-   }
-
-   
-      func convertImageLinkToData(urlLink: @escaping (Data) -> ()) {
-      let urlRequest = URLRequest(url: URL(string: News.imageLink)!)
-      let urlSession = URLSession(configuration: URLSessionConfiguration.default)
-      let task = urlSession.dataTask(with: urlRequest) { (data, response, error) in
-         
-         guard let responseData = data else {
-            print("Error \(error.debugDescription): did not receive data")
-            return
-         }
-         DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async {
-            urlLink(responseData)
          }
       }
       task.resume()
-      
-      
-      
-      
    }
    
    
-   
-   
+   func parseJSON(jsonData: Data) {
+      do {
+         let parsedJSON = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:Any]
+         
+         let jSONarticles = parsedJSON["articles"] as! [[String:Any]]
+         print(jSONarticles)
+         
+         for item in jSONarticles {
+            
+            let title = item["title"] as? (String) ?? "No article title"
+            let description = item["description"] as? (String) ?? "No article description"
+            let imageLink = item["urlToImage"] as? (String) ?? "No article image"
+            let url = item["url"] as? (String) ?? "No article URL"
+            let article = Article(title: title, description: description, imageLink: imageLink, url: url)
+            Article.articles.append(article)
+         }
+      }
+      catch {
+         print(error.localizedDescription)
+      }
+      DispatchQueue.main.async {
+         self.myTableView.reloadData()
+      }
+   }
    
    
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return 1
+      if filteredArticles.count > 0 {
+         return filteredArticles.count
+      } else {
+         return Article.articles.count
+      }
    }
-
-   
    
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+      
       let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
-      
-         cell.cellImage.image = UIImage(data: News.dataOfImageLink)
-  
-      
-      return cell
-   }
-
-   
-   
-   
-   
-   
+      if filteredArticles.count > 0 {
+         cell.article = filteredArticles[indexPath.row]
+         return cell
+      } else {
+         cell.article = Article.articles[indexPath.row]
+         return cell
       }
+   }
+   
+   
+   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+      let selectedArticle = Article.articles[indexPath.row]
+      let svc = SFSafariViewController(url: URL(string: selectedArticle.url)!)
+      self.navigationController?.pushViewController(svc, animated: true)
+   }
+   
+   
+}
+
+//extension RootViewController: UISearchResultsUpdating {
+//   func updateSearchResults(for searchController: UISearchController) {
+//      filterArticles(searchText: searchController.searchBar.text)
+//   }
+//}
+
+
 
