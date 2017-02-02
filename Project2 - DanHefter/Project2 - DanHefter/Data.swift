@@ -30,6 +30,17 @@ class Article {
    
    static var dataOfImageLink = [Data]()
    
+   
+   enum Category: String {
+      
+      case allStories = "All Stories"
+      case sports = "Sports"
+      case entertainment = "Entertainment"
+      case business = "Business"
+      case finance = "Finance"
+      case politics = "Politics"
+   }
+   
 }
 
 
