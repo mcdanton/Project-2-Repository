@@ -25,21 +25,30 @@ class Article {
       self.description = description
       self.imageLink = imageLink
       self.url = url
-//      Article.articles.append(self)
    }
    
    static var dataOfImageLink = [Data]()
    
    
-   enum Category: String {
-      
-      case allStories = "All Stories"
-      case sports = "Sports"
-      case entertainment = "Entertainment"
-      case business = "Business"
-      case finance = "Finance"
-      case politics = "Politics"
-   }
+
+   
+}
+
+
+enum Category: String {
+   
+   case allStories = "All Stories"
+   case sports = "Sports"
+   case entertainment = "Entertainment"
+   case business = "Business"
+   case finance = "Finance"
+   case politics = "Politics"
+   
+   static let allEnums: [String] = {
+      return [Category.allStories.rawValue, Category.sports.rawValue, Category.entertainment.rawValue, Category.business.rawValue, Category.finance.rawValue, Category.politics.rawValue]
+   }()
+   
+   
    
 }
 
@@ -53,4 +62,4 @@ class Article {
 
 //WSJ API: https://newsapi.org/v1/articles?source=the-wall-street-journal&sortBy=top&apiKey=3fc2184706b64c03ab90b8472270562e
 
-
+//Buzzfeed API:  https://newsapi.org/v1/articles?source=buzzfeed&sortBy=latest&apiKey=3fc2184706b64c03ab90b8472270562e

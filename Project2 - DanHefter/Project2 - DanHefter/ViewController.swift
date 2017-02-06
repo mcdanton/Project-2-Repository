@@ -11,20 +11,29 @@ import SafariServices
 
 class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
    
+   
+   // MARK: Properties
+   var filteredArticles = [Article]()
+   var listOfCategories = [String]()
+   var sidebarShowing = false
+   
+   
+   
+   // MARK: Outlets
    @IBOutlet weak var myTableView: UITableView!
    @IBOutlet weak var searchBar: UISearchBar!
    @IBOutlet weak var categories: UIBarButtonItem!
    @IBOutlet weak var sidebarView: UIView!
+   @IBOutlet weak var sidebarTableView: UITableView!
    @IBOutlet weak var sidebarLeadingConstraint: NSLayoutConstraint!
    
    
-   var filteredArticles = [Article]()
-   var sidebarShowing = false
    
+   // MARK: Actions
    
    @IBAction func categoriesPressed(_ sender: Any) {
       if sidebarShowing {
-      sidebarLeadingConstraint.constant = -150
+         sidebarLeadingConstraint.constant = -150
       } else {
          sidebarLeadingConstraint.constant = 0
          UIView.animate(withDuration: 0.3, animations: { self.view.layoutIfNeeded()})
@@ -38,7 +47,8 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
       self.myTableView.tableHeaderView = searchBar
    }
    
-   //MARK: Search Bar Delegate
+   // MARK: Search Bar Delegate
+   
    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       filteredArticles = Article.articles.filter({ (mod) -> Bool in
          return mod.title.lowercased().contains(searchText.lowercased())
@@ -49,6 +59,17 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       self.searchBar.endEditing(true)
    }
+   
+   
+   // MARK: Setting Categories
+   
+   func setCategories() {
+      for category in Article.Category.RawValue {
+         listOfCategories.append(category)
+      }
+   }
+   
+   
    
    
    override func viewDidLoad() {
@@ -62,7 +83,7 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
       
       let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
       view.addGestureRecognizer(tap)
-        }
+   }
    
    override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
@@ -117,26 +138,53 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    }
    
    
+   // MARK: Table View Setup
+   
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      if filteredArticles.count > 0 {
-         return filteredArticles.count
-      } else {
-         return Article.articles.count
+      
+      var count:Int?
+      
+      if tableView == myTableView {
+         
+         if filteredArticles.count > 0 {
+            count = filteredArticles.count
+         } else {
+            count = Article.articles.count
+         }
       }
+      if tableView == sidebarTableView {
+         count = 7
+      }
+      return count!
    }
    
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       
-      let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
-      if filteredArticles.count > 0 {
-         cell.article = filteredArticles[indexPath.row]
-         return cell
-      } else {
-         cell.article = Article.articles[indexPath.row]
+      var cell: UITableViewCell?
+      
+      if tableView == myTableView {
+         
+         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! TableViewCell
+         if filteredArticles.count > 0 {
+            cell.article = filteredArticles[indexPath.row]
+            return cell
+
+         } else {
+            cell.article = Article.articles[indexPath.row]
+            return cell
+         }
+      }
+      
+      if tableView == sidebarTableView {
+         
+         let cell = tableView.dequeueReusableCell(withIdentifier: "SidebarTableViewCell", for: indexPath) as! SidebarTableViewCell
+         cell.categoryName.text = "PLACEHOLDER"
          return cell
       }
+      print("Something is wrong, your tableviews didn't load correctly....")
+      return cell!
    }
    
    

@@ -10,6 +10,12 @@ import UIKit
 
 class SidebarTableViewCell: UITableViewCell {
 
+   
+   // MARK: Outlets
+   
+   @IBOutlet weak var categoryName: UILabel!
+   
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

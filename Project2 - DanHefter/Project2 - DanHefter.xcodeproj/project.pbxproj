@@ -66,12 +66,12 @@
 				37E0766F1DEF449C00BBE150 /* ViewController.swift */,
 				372A631F1DF0C0D7001DB108 /* TableViewCell.swift */,
 				372A63211DF0C862001DB108 /* Data.swift */,
+				377FE3DB1E2E6C9600D2F422 /* SidebarTableViewCell.swift */,
 				37E076711DEF449C00BBE150 /* Main.storyboard */,
 				37E076741DEF449C00BBE150 /* Assets.xcassets */,
 				37CC82611E1BEB14008A3D46 /* menu-interface-symbol-of-four-horizontal-lines-with-dots_318-55795.jpg */,
 				37E076761DEF449C00BBE150 /* LaunchScreen.storyboard */,
 				37E076791DEF449C00BBE150 /* Info.plist */,
-				377FE3DB1E2E6C9600D2F422 /* SidebarTableViewCell.swift */,
 			);
 			path = "Project2 - DanHefter";
 			sourceTree = "<group>";
