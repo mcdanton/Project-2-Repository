@@ -11,67 +11,67 @@ import SafariServices
 
 class RootViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
    
+   
+   // MARK: Properties
+   
+   var filteredArticles = [Article]()
+
+   
+   // MARK: Outlets
+   
    @IBOutlet weak var myTableView: UITableView!
    @IBOutlet weak var searchBar: UISearchBar!
    @IBOutlet weak var categories: UIBarButtonItem!
-   @IBOutlet weak var sidebarView: UIView!
-   @IBOutlet weak var sidebarLeadingConstraint: NSLayoutConstraint!
    
    
-   var filteredArticles = [Article]()
-   var sidebarShowing = false
    
+   // MARK: View Loading
    
-   @IBAction func categoriesPressed(_ sender: Any) {
-      if sidebarShowing {
-      sidebarLeadingConstraint.constant = -150
-      } else {
-         sidebarLeadingConstraint.constant = 0
-         UIView.animate(withDuration: 0.3, animations: { self.view.layoutIfNeeded()})
-      }
-      sidebarShowing = !sidebarShowing
+   override func viewDidLoad() {
+      super.viewDidLoad()
+      searchBar.delegate = self
+      
+      fetchData(closure: { data in
+         self.parseJSON(jsonData: data)
+      })
+      
+      let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+      view.addGestureRecognizer(tap)
    }
    
+   override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
+   }
+   
+   
+   // MARK: Functions
    
    func searchBarSetup() {
       searchBar.showsScopeBar = false
       self.myTableView.tableHeaderView = searchBar
    }
    
-   //MARK: Search Bar Delegate
+   
+   func dismissKeyboard() {
+      view.endEditing(true)
+   }
+   
+   
+   
+   // MARK: Search Bar Delegate
    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       filteredArticles = Article.articles.filter({ (mod) -> Bool in
          return mod.title.lowercased().contains(searchText.lowercased())
       })
       self.myTableView.reloadData()
    }
-   
    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       self.searchBar.endEditing(true)
    }
+
+
    
-   
-   override func viewDidLoad() {
-      super.viewDidLoad()
-      searchBar.delegate = self
-      sidebarView.layer.shadowOpacity = 1
-      sidebarView.layer.shadowRadius = 5
-      
-      fetchData(closure: { data in
-         self.parseJSON(jsonData: data)})
-      
-      let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-      view.addGestureRecognizer(tap)
-        }
-   
-   override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
-   }
-   
-   func dismissKeyboard() {
-      view.endEditing(true)
-   }
+   // MARK: API Calls and Parsing
    
    func fetchData(closure: @escaping (Data) -> ()) {
       
@@ -117,6 +117,7 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    }
    
    
+   // MARK: TableView Setup
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       if filteredArticles.count > 0 {
@@ -150,11 +151,6 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
 }
 
-//extension RootViewController: UISearchResultsUpdating {
-//   func updateSearchResults(for searchController: UISearchController) {
-//      filterArticles(searchText: searchController.searchBar.text)
-//   }
-//}
 
 
 
