@@ -21,8 +21,6 @@ class RootViewController: UIViewController, UITableViewDataSource, UITableViewDe
    
    @IBOutlet weak var myTableView: UITableView!
    @IBOutlet weak var searchBar: UISearchBar!
-   @IBOutlet weak var categories: UIBarButtonItem!
-   
    
    
    // MARK: View Loading

@@ -25,7 +25,6 @@ class Article {
       self.description = description
       self.imageLink = imageLink
       self.url = url
-//      Article.articles.append(self)
    }
    
    static var dataOfImageLink = [Data]()

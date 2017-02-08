@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-286" y="256"/>
         </scene>
-        <!--Root View Controller-->
+        <!--WSJ News-->
         <scene sceneID="csa-YV-5UL">
             <objects>
                 <viewController id="vqp-9F-QkD" customClass="RootViewController" customModule="Project2___DanHefter" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,25 +38,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NLe-oF-0br">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="250" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NLe-oF-0br">
                                 <rect key="frame" x="0.0" y="43.5" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="myCell" id="IIQ-oA-dx4" customClass="TableViewCell" customModule="Project2___DanHefter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="1" width="375" height="130"/>
+                                        <rect key="frame" x="0.0" y="1" width="375" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IIQ-oA-dx4" id="3bB-Ww-Qos">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PH1-vH-R1k">
-                                                    <rect key="frame" x="8" y="3" width="360" height="124"/>
+                                                    <rect key="frame" x="8" y="6" width="360" height="237.5"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="jic-6S-aKL">
-                                                    <rect key="frame" x="38" y="84" width="300" height="39"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Story Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="jic-6S-aKL">
+                                                    <rect key="frame" x="19" y="197.5" width="337.5" height="42"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -66,10 +66,10 @@
                                                 <constraint firstItem="PH1-vH-R1k" firstAttribute="height" secondItem="3bB-Ww-Qos" secondAttribute="height" multiplier="0.95" id="1dK-op-yGz"/>
                                                 <constraint firstItem="jic-6S-aKL" firstAttribute="centerX" secondItem="3bB-Ww-Qos" secondAttribute="centerX" id="FU9-KR-BNN"/>
                                                 <constraint firstItem="PH1-vH-R1k" firstAttribute="centerY" secondItem="3bB-Ww-Qos" secondAttribute="centerY" id="OOl-MX-8wC"/>
-                                                <constraint firstItem="jic-6S-aKL" firstAttribute="centerY" secondItem="3bB-Ww-Qos" secondAttribute="centerY" multiplier="1.6" id="PiJ-tn-ArF"/>
-                                                <constraint firstItem="jic-6S-aKL" firstAttribute="width" secondItem="3bB-Ww-Qos" secondAttribute="width" multiplier="0.8" id="alD-VM-MUX"/>
+                                                <constraint firstItem="jic-6S-aKL" firstAttribute="centerY" secondItem="3bB-Ww-Qos" secondAttribute="centerY" multiplier="1.75" id="PiJ-tn-ArF"/>
+                                                <constraint firstItem="jic-6S-aKL" firstAttribute="width" secondItem="3bB-Ww-Qos" secondAttribute="width" multiplier="0.9" id="alD-VM-MUX"/>
                                                 <constraint firstItem="PH1-vH-R1k" firstAttribute="centerX" secondItem="3bB-Ww-Qos" secondAttribute="centerX" id="mhe-4g-Sal"/>
-                                                <constraint firstItem="jic-6S-aKL" firstAttribute="height" secondItem="3bB-Ww-Qos" secondAttribute="height" multiplier="0.3" id="sEZ-Fk-tIF"/>
+                                                <constraint firstItem="jic-6S-aKL" firstAttribute="height" secondItem="3bB-Ww-Qos" secondAttribute="height" multiplier="0.17" id="sEZ-Fk-tIF"/>
                                                 <constraint firstItem="PH1-vH-R1k" firstAttribute="width" secondItem="3bB-Ww-Qos" secondAttribute="width" multiplier="0.96" id="zmf-GV-sFl"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -99,15 +99,8 @@
                             <constraint firstItem="NLe-oF-0br" firstAttribute="height" secondItem="8yH-pd-Lb3" secondAttribute="height" multiplier="0.97" id="rVB-zm-d6s"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Wp8-tR-RWp">
-                        <barButtonItem key="leftBarButtonItem" title="Categories" id="xtU-fM-KTi">
-                            <connections>
-                                <action selector="categoriesPressed:" destination="vqp-9F-QkD" id="XZj-mn-JRP"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="WSJ News" id="Wp8-tR-RWp"/>
                     <connections>
-                        <outlet property="categories" destination="xtU-fM-KTi" id="JcR-wH-JNg"/>
                         <outlet property="myTableView" destination="NLe-oF-0br" id="Oyp-Mq-hFV"/>
                         <outlet property="searchBar" destination="avq-J4-PSf" id="yvH-eD-BfX"/>
                     </connections>
