@@ -3,7 +3,7 @@ This app displays trending top stories from the Wall Street Journal. You can sea
 
 
 ##Screenshots
-![Home Page](News App Screenshots/Daily News Home Page.png "Home Page")![Full Article](News App Screenshots/Daily News Full Article.png "Full Article")
+![Home Page](News App Screenshots/Daily_News_Home_Page.png "Home Page")![Full Article](News App Screenshots/Daily_News_Full_Article.png "Full Article")
 
 
 
